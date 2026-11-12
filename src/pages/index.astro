@@ -12,7 +12,7 @@ const release = await getLatestRelease();
 ---
 
 <Layout>
-  <Nav />
+  <Nav release={release} />
   <main>
     <Hero release={release} />
     <Features />

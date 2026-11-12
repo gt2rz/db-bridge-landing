@@ -1,0 +1,61 @@
+---
+import Panel from "./Panel.astro";
+
+const rows = [
+  { id: 7, name: "Café en grano 1 kg", price: "18.50", stock: "24" },
+  { id: 8, name: "Filtros V60 ×100", price: "6.90", stock: "0", editing: true },
+  { id: 9, name: "Molinillo manual", price: "54.00", stock: "3", menu: true },
+];
+---
+
+<Panel title="products" label="Edición de una celda en DB Bridge y menú contextual de la fila">
+  <span slot="actions" class="ml-auto rounded bg-success/15 px-1.5 text-success">Editable</span>
+
+  <div class="relative pb-24">
+    <table class="w-full font-mono text-[12px]">
+      <thead>
+        <tr class="text-left text-muted">
+          <th class="px-4 py-2 font-sans font-semibold">id</th>
+          <th class="px-4 py-2 font-sans font-semibold">name</th>
+          <th class="px-4 py-2 font-sans font-semibold">price</th>
+          <th class="px-4 py-2 font-sans font-semibold">stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr class:list={["border-t border-border", row.menu && "bg-hover"]}>
+              <td class="px-4 py-2 text-number">{row.id}</td>
+              <td class="truncate px-4 py-2 text-text">{row.name}</td>
+              <td class="px-4 py-2 text-number">{row.price}</td>
+              <td class="px-4 py-1.5">
+                {row.editing ? (
+                  <span class="inline-flex w-16 items-center rounded border border-accent bg-bg px-1.5 py-0.5 text-text">
+                    40<span class="ml-px h-3.5 w-px bg-accent" />
+                  </span>
+                ) : (
+                  <span class="text-number">{row.stock}</span>
+                )}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <ul
+      class="absolute top-28 right-4 w-40 rounded-md border border-border-strong bg-raised p-1 text-[11px] text-text-soft shadow-xl shadow-black/40 sm:right-10"
+    >
+      <li class="rounded px-2 py-1">Ver valor</li>
+      <li class="rounded px-2 py-1">Copiar</li>
+      <li class="rounded bg-hover px-2 py-1 text-text">Poner a NULL</li>
+      <li class="mt-1 border-t border-border px-2 pt-1.5 pb-1 text-danger">Eliminar fila</li>
+    </ul>
+  </div>
+
+  <div class="flex items-center gap-2 border-t border-border px-4 py-2.5 text-[11px] text-muted">
+    <span class="size-1.5 rounded-full bg-success"></span>
+    Enter para guardar · Esc para cancelar
+    <span class="ml-auto text-warning">↑ Push automático</span>
+  </div>
+</Panel>

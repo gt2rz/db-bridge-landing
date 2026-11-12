@@ -12,7 +12,7 @@ const rows = [
 ---
 
 <figure
-  class="overflow-hidden rounded-xl border border-border-strong bg-surface shadow-2xl shadow-black/40"
+  class="overflow-hidden rounded-lg border border-border-strong bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
   aria-label="Ventana de DB Bridge mostrando la tabla orders de una app en el simulador de iOS"
 >
   <div aria-hidden="true">
@@ -21,8 +21,11 @@ const rows = [
       <span class="size-3 rounded-full bg-[#febc2e]"></span>
       <span class="size-3 rounded-full bg-[#28c840]"></span>
       <span class="ml-3 hidden text-xs text-subtle sm:inline">DB Bridge · com.acme.shop/app.db</span>
-      <span class="ml-auto rounded-md border border-warning/40 px-2 py-0.5 text-[11px] text-warning">
-        ↑ Push al emulador
+      <span class="ml-auto flex items-center gap-2">
+        <span class="grid size-4 place-items-center rounded-full bg-accent font-sans text-[10px] font-semibold text-on-accent">1</span>
+        <span class="rounded-md border border-warning/40 px-2 py-0.5 text-[11px] text-warning">
+          ↑ Push al simulador
+        </span>
       </span>
     </div>
 
@@ -69,7 +72,8 @@ const rows = [
             <span class="font-mono text-text">orders</span>
             <span class="text-muted">filas 1–5 de 1 284</span>
             <span class="rounded bg-success/15 px-1.5 text-success">Editable</span>
-            <span class="ml-auto font-mono text-success">+1</span>
+            <span class="ml-auto"><span class="grid size-4 place-items-center rounded-full bg-accent font-sans text-[10px] font-semibold text-on-accent">2</span></span>
+            <span class="font-mono text-success">+1</span>
             <span class="font-mono text-warning">~1</span>
           </div>
           <div class="overflow-x-auto">
@@ -110,6 +114,7 @@ const rows = [
             </table>
           </div>
           <div class="flex items-center gap-2 border-t border-border px-3 py-2 text-[10px] text-muted">
+            <span class="grid size-4 place-items-center rounded-full bg-accent font-sans text-[10px] font-semibold text-on-accent">3</span>
             Live Watch
             <span class="rounded-md bg-raised px-1.5 py-0.5 text-text">2 s</span>
             <span class="ml-auto">« ‹ Página 1 de 7 › »</span>

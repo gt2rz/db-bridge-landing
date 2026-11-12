@@ -1,5 +1,6 @@
 ---
-import { RELEASES_URL, REPO_URL } from "../config";
+import Logo from "./Logo.astro";
+import { AUTHOR_URL, RELEASES_URL, REPO_URL } from "../config";
 import type { Release } from "../lib/release";
 
 interface Props {
@@ -9,14 +10,27 @@ interface Props {
 const { release } = Astro.props;
 ---
 
-<footer class="border-t border-border">
+<footer>
   <div
-    class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6"
+    class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 text-sm text-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6"
   >
-    <p class="flex items-center gap-2">
-      <span class="size-2 rounded-full bg-accent"></span>
-      DB Bridge{release ? ` ${release.version}` : ""} · Hecho con Rust y egui
-    </p>
+    <div class="space-y-1.5">
+      <p class="flex items-center gap-2 text-text-soft">
+        <Logo class="size-4" />
+        DB Bridge{release ? ` ${release.version}` : ""}
+        <span class="text-subtle">· Rust y egui</span>
+      </p>
+      <p class="flex items-center gap-1.5">
+        Hecho con
+        <svg class="size-3.5 text-danger" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="amor">
+          <path
+            d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2.2 4 6.2 4c2.3 0 3.8 1.3 4.8 2.7C12 5.3 13.5 4 15.8 4c4 0 5.9 4.4 4.2 7.7C19.5 16.4 12 21 12 21Z"
+          ></path>
+        </svg>
+        por
+        <a href={AUTHOR_URL} class="text-text-soft underline-offset-4 hover:text-text hover:underline">gt2rz</a>
+      </p>
+    </div>
     <div class="flex gap-5">
       <a href={REPO_URL} class="hover:text-text">Código</a>
       <a href={RELEASES_URL} class="hover:text-text">Versiones</a>

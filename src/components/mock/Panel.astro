@@ -1,0 +1,20 @@
+---
+// Marco común de las maquetas: un panel de la app con su barra de título. El contenido es
+// decorativo; el lector de pantalla recibe solo `label`.
+interface Props {
+  title: string;
+  label: string;
+}
+
+const { title, label } = Astro.props;
+---
+
+<figure class="overflow-hidden rounded-lg border border-border-strong bg-surface" aria-label={label}>
+  <div aria-hidden="true">
+    <div class="flex items-center gap-2 border-b border-border bg-sidebar px-4 py-2 text-[11px] text-subtle">
+      <span class="font-mono">{title}</span>
+      <slot name="actions" />
+    </div>
+    <slot />
+  </div>
+</figure>

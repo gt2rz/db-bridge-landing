@@ -1,0 +1,44 @@
+---
+import Panel from "./Panel.astro";
+---
+
+<Panel title="Cambios desde la línea base · hace 2 min" label="Comparación de DB Bridge con la línea base: filas insertadas, eliminadas y modificadas">
+  <span slot="actions" class="ml-auto flex gap-2 font-mono">
+    <span class="text-success">+2</span>
+    <span class="text-danger">−1</span>
+    <span class="text-warning">~1</span>
+  </span>
+
+  <div class="divide-y divide-border font-mono text-[12px]">
+    <div class="px-4 py-3">
+      <p class="flex items-center gap-2 font-sans text-[11px] text-muted">
+        <span class="text-text">orders</span> 1 insertada · 1 modificada
+      </p>
+      <div class="mt-2 space-y-1">
+        <p class="rounded bg-success/10 px-2 py-1 text-success">
+          + <span class="text-number">1045</span> pending · 13.40 · 2026-11-10 09:55
+        </p>
+        <p class="rounded bg-warning/10 px-2 py-1">
+          <span class="text-warning">~</span>{" "}<span class="text-number">1042</span>{" "}
+          <span class="text-muted">status</span>{" "}
+          <span class="text-subtle line-through">synced</span>{" "}
+          <span class="text-muted">→</span>{" "}
+          <span class="text-warning">pending</span>
+        </p>
+      </div>
+    </div>
+    <div class="px-4 py-3">
+      <p class="flex items-center gap-2 font-sans text-[11px] text-muted">
+        <span class="text-text">sync_outbox</span> 1 insertada · 1 eliminada
+      </p>
+      <div class="mt-2 space-y-1">
+        <p class="rounded bg-success/10 px-2 py-1 text-success">
+          + <span class="text-number">88</span> orders/1045 · <span class="text-string">'POST'</span>
+        </p>
+        <p class="rounded bg-danger/10 px-2 py-1 text-danger">
+          − <span class="text-number">87</span> orders/1042 · <span class="text-string">'PATCH'</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</Panel>

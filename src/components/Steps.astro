@@ -1,30 +1,61 @@
 ---
+// Lo que hace la app en cada paso, con las herramientas que usa por debajo (ver src/mobile/ en
+// el repo de la app).
 const steps = [
   {
-    title: "Elige el dispositivo y la app",
-    body: "Pulsa Detectar: aparecen los simuladores y emuladores encendidos, sus apps y las bases de datos de cada una.",
+    title: "Detecta",
+    body: "Lista los simuladores y emuladores encendidos, sus apps y las bases de datos de cada una.",
+    ios: "xcrun simctl listapps booted",
+    android: "adb shell run-as <paquete> find .",
   },
   {
-    title: "Extrae y explora",
-    body: "Extraer y conectar copia la base de datos. Navega por las tablas, filtra, ordena o escribe tu propia consulta.",
+    title: "Copia",
+    body: "Trae la base de datos y su WAL a una carpeta local. Todo lo que consultas y editas es esa copia.",
+    ios: "xcrun simctl get_app_container",
+    android: "adb exec-out run-as <paquete> cat",
   },
   {
-    title: "Edita y vuelve a abrir la app",
-    body: "Cada cambio se envía al dispositivo. Reabre la app y verás los datos tal y como los dejaste.",
+    title: "Devuelve",
+    body: "Al aplicar un cambio, la copia vuelve al contenedor de la app. Ábrela de nuevo y verás los datos tal y como los dejaste.",
+    ios: "xcrun simctl terminate + copia",
+    android: "adb push + run-as cp",
   },
 ];
 ---
 
-<section id="como-funciona" class="border-t border-border">
-  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-    <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Cómo funciona</h2>
-    <ol class="mt-12 grid gap-8 md:grid-cols-3">
+<section id="como-funciona" class="border-b border-border bg-sidebar/40">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+    <div class="grid gap-6 lg:grid-cols-12">
+      <h2 class="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl lg:col-span-5">Cómo funciona</h2>
+      <p class="text-muted lg:col-span-6 lg:col-start-7">
+        DB Bridge no se instala en el dispositivo ni necesita cambios en tu app. Usa las mismas
+        herramientas que ya tienes: <code class="font-mono text-[0.9em] text-text-soft">simctl</code>{" "}
+        de Xcode y <code class="font-mono text-[0.9em] text-text-soft">adb</code> del Android SDK.
+      </p>
+    </div>
+
+    <ol class="mt-14 grid border-t border-border md:grid-cols-3">
       {
         steps.map((step, index) => (
-          <li>
-            <span class="font-mono text-sm text-accent">0{index + 1}</span>
-            <h3 class="mt-2 text-lg font-semibold">{step.title}</h3>
+          <li
+            class:list={[
+              "border-b border-border py-8 md:border-b-0 md:pr-8",
+              index > 0 && "md:border-l md:pl-8",
+            ]}
+          >
+            <p class="font-mono text-xs text-subtle">0{index + 1}</p>
+            <h3 class="mt-3 text-lg font-semibold">{step.title}</h3>
             <p class="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
+            <dl class="mt-5 space-y-1.5 font-mono text-[11px]">
+              <div class="flex gap-3">
+                <dt class="w-14 shrink-0 text-subtle">iOS</dt>
+                <dd class="text-text-soft">{step.ios}</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="w-14 shrink-0 text-subtle">Android</dt>
+                <dd class="text-text-soft">{step.android}</dd>
+              </div>
+            </dl>
           </li>
         ))
       }

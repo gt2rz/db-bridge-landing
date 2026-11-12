@@ -1,71 +1,84 @@
 ---
-const features = [
+import DevicePicker from "./mock/DevicePicker.astro";
+import BaselineDiff from "./mock/BaselineDiff.astro";
+import CellEdit from "./mock/CellEdit.astro";
+
+// Las tres funciones principales, cada una con una maqueta de la parte de la app que describe.
+const highlights = [
   {
-    title: "Simulador de iOS y emulador de Android",
-    body: "Detecta los dispositivos encendidos, las apps instaladas y sus bases de datos. Extrae la copia con su WAL, sin tocar la app.",
-    icon: "M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm4 15h2",
+    label: "Dispositivos",
+    title: "Encuentra la base de datos sin buscar rutas.",
+    body: "Pulsa Detectar y aparecen los simuladores y emuladores encendidos, sus apps (sin las del sistema) y las bases de datos de cada una. La copia incluye el WAL, así que ves lo último que escribió la app.",
+    mock: DevicePicker,
   },
   {
-    title: "Edita y envía al dispositivo",
-    body: "Doble clic para editar, inserta o borra filas y pon valores a NULL. Con push automático, cada cambio vuelve a la app al momento.",
-    icon: "M4 20h4l10-10-4-4L4 16v4Zm10-14 4 4",
+    label: "Línea base",
+    title: "Mira qué escribió tu app al pulsar un botón.",
+    body: "Fija una foto de la base de datos, usa la app y abre Ver cambios: filas insertadas, eliminadas y modificadas celda a celda, además de tablas nuevas o con columnas distintas. Con Live Watch se actualiza sola.",
+    mock: BaselineDiff,
   },
   {
-    title: "Live Watch",
-    body: "Vuelve a extraer y a ejecutar la consulta cada 2 s, 5 s, 30 s o 1 min para ver cómo escribe tu app en tiempo casi real.",
-    icon: "M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+    label: "Edición",
+    title: "Cambia un dato y pruébalo en la app.",
+    body: "Doble clic para editar, + Fila para insertar y clic derecho para poner a NULL o borrar. Con el push automático cada cambio vuelve al dispositivo en cuanto se aplica, también los INSERT, UPDATE o DDL del editor.",
+    mock: CellEdit,
   },
-  {
-    title: "Qué cambió desde la línea base",
-    body: "Fija una foto de la base de datos, usa la app y mira por tabla qué filas se insertaron, borraron o modificaron, celda a celda.",
-    icon: "M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01",
-  },
-  {
-    title: "Editor SQL completo",
-    body: "Resaltado de sintaxis, scripts de varias sentencias en un savepoint, EXPLAIN QUERY PLAN, historial y consultas favoritas.",
-    icon: "m8 9-3 3 3 3m8-6 3 3-3 3m-5 4 2-12",
-  },
-  {
-    title: "Esquema y datos a la vista",
-    body: "Columnas, índices, claves foráneas y triggers de cada tabla. Ordena, filtra y pagina miles de filas; JSON formateado y BLOB en hexadecimal.",
-    icon: "M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Zm0 0v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3",
-  },
+];
+
+const more = [
+  ["Editor SQL", "Resaltado, números de línea y Cmd/Ctrl + Enter."],
+  ["Scripts", "Varias sentencias dentro de un savepoint: si una falla, no se aplica ninguna."],
+  ["Plan de consulta", "EXPLAIN QUERY PLAN de la consulta, en forma de árbol."],
+  ["Historial y favoritas", "Las últimas 30 consultas, guardadas entre sesiones."],
+  ["Esquema", "Columnas, índices, claves foráneas, triggers y el CREATE original."],
+  ["Visor de valores", "JSON formateado y BLOB en hexadecimal con el tipo detectado."],
+  ["Ordenar y filtrar", "Clic en la cabecera y búsqueda en todas las columnas."],
+  ["Paginación", "Páginas de 200 filas con el total siempre a la vista."],
+  ["Archivo local", "Arrastra un .db o .sqlite a la ventana y listo."],
 ];
 ---
 
-<section id="funciones" class="border-t border-border bg-sidebar/50">
-  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-    <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-      Todo lo que necesitas para depurar datos locales
-    </h2>
-    <p class="mt-3 max-w-2xl text-muted">
-      Pensada para apps con Flutter, React Native, Room, SQLDelight, SwiftData o Core Data que
-      guardan su estado en SQLite.
-    </p>
+<section id="funciones" class="border-b border-border">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
+        Hecho para depurar el estado local de una app.
+      </h2>
+      <p class="mt-4 text-muted">
+        Flutter, React Native, Room, SQLDelight, SwiftData, Core Data: si tu app guarda su estado
+        en SQLite, DB Bridge lo abre.
+      </p>
+    </div>
 
-    <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-16 space-y-20 sm:space-y-28">
       {
-        features.map((feature) => (
-          <li class="rounded-xl border border-border bg-surface p-6">
-            <span class="grid size-10 place-items-center rounded-lg bg-accent/12 text-accent">
-              <svg
-                class="size-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d={feature.icon} />
-              </svg>
-            </span>
-            <h3 class="mt-4 font-semibold">{feature.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{feature.body}</p>
-          </li>
+        highlights.map((item, index) => (
+          <article class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+            <div class:list={["min-w-0 lg:col-span-5", index % 2 === 1 && "lg:order-2 lg:col-start-8"]}>
+              <p class="font-mono text-xs text-accent">{item.label}</p>
+              <h3 class="mt-3 text-2xl font-semibold tracking-[-0.02em] text-balance">{item.title}</h3>
+              <p class="mt-4 leading-relaxed text-muted">{item.body}</p>
+            </div>
+            <div class:list={["min-w-0 lg:col-span-7", index % 2 === 1 && "lg:order-1 lg:col-start-1"]}>
+              <item.mock />
+            </div>
+          </article>
         ))
       }
-    </ul>
+    </div>
+
+    <div class="mt-24 border-t border-border pt-10">
+      <h3 class="text-sm font-semibold text-text-soft">Y además</h3>
+      <dl class="mt-6 grid gap-x-10 gap-y-6 text-sm sm:grid-cols-2 lg:grid-cols-3">
+        {
+          more.map(([term, description]) => (
+            <div>
+              <dt class="font-medium text-text">{term}</dt>
+              <dd class="mt-1 text-muted">{description}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </div>
 </section>

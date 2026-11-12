@@ -5,6 +5,7 @@
 export const REPO = "gt2rz/db-bridge";
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases`;
+export const AUTHOR_URL = "https://github.com/gt2rz";
 
 export type PlatformId = "macos" | "windows" | "linux";
 
