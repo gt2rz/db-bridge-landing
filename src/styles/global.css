@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Misma paleta que la app (src/theme.rs). */
+@theme {
+  --color-bg: #0f1115;
+  --color-sidebar: #13151b;
+  --color-surface: #161920;
+  --color-raised: #262a33;
+  --color-hover: #1f232b;
+  --color-border: #262a33;
+  --color-border-strong: #333844;
+
+  --color-text: #e6e8ec;
+  --color-text-soft: #c9ced6;
+  --color-muted: #9aa1ad;
+  --color-subtle: #7d8593;
+  --color-faint: #5c6370;
+
+  --color-accent: #5b9bff;
+  --color-on-accent: #0b1220;
+  --color-success: #3dd68c;
+  --color-warning: #f0a43a;
+  --color-danger: #f26d6d;
+  --color-number: #f78c6c;
+  --color-keyword: #c792ea;
+  --color-string: #c3e88d;
+  --color-ident: #7fdbca;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,25 @@
+---
+import { REPO_URL } from "../config";
+---
+
+<header class="sticky top-0 z-20 border-b border-border/70 bg-bg/80 backdrop-blur">
+  <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <a href="#inicio" class="flex items-center gap-2 font-semibold tracking-tight">
+      <span class="size-2.5 rounded-full bg-accent"></span>
+      DB Bridge
+    </a>
+    <div class="flex items-center gap-1 text-sm text-muted sm:gap-4">
+      <a href="#funciones" class="hidden rounded-md px-2 py-1 hover:text-text sm:inline">Funciones</a>
+      <a href="#como-funciona" class="hidden rounded-md px-2 py-1 hover:text-text sm:inline">
+        Cómo funciona
+      </a>
+      <a href={REPO_URL} class="rounded-md px-2 py-1 hover:text-text">GitHub</a>
+      <a
+        href="#descargar"
+        class="rounded-lg bg-accent px-3 py-1.5 font-semibold text-on-accent hover:brightness-110"
+      >
+        Descargar
+      </a>
+    </div>
+  </nav>
+</header>

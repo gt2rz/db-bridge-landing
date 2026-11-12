@@ -1,0 +1,26 @@
+---
+import { RELEASES_URL, REPO_URL } from "../config";
+import type { Release } from "../lib/release";
+
+interface Props {
+  release: Release | null;
+}
+
+const { release } = Astro.props;
+---
+
+<footer class="border-t border-border">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6"
+  >
+    <p class="flex items-center gap-2">
+      <span class="size-2 rounded-full bg-accent"></span>
+      DB Bridge{release ? ` ${release.version}` : ""} · Hecho con Rust y egui
+    </p>
+    <div class="flex gap-5">
+      <a href={REPO_URL} class="hover:text-text">Código</a>
+      <a href={RELEASES_URL} class="hover:text-text">Versiones</a>
+      <a href={`${REPO_URL}/issues`} class="hover:text-text">Reportar un problema</a>
+    </div>
+  </div>
+</footer>

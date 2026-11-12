@@ -1,0 +1,97 @@
+---
+import AppPreview from "./AppPreview.astro";
+import { PLATFORMS, downloadUrl } from "../config";
+import type { Release } from "../lib/release";
+
+interface Props {
+  release: Release | null;
+}
+
+const { release } = Astro.props;
+const [macos] = PLATFORMS;
+---
+
+<section id="inicio" class="relative overflow-hidden">
+  <div
+    class="pointer-events-none absolute inset-x-0 -top-40 h-[480px] bg-[radial-gradient(ellipse_at_top,rgba(91,155,255,0.18),transparent_65%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24">
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-border-strong bg-surface px-3 py-1 text-xs text-muted"
+      >
+        <span class="size-1.5 rounded-full bg-success"></span>
+        Inspector SQLite para apps offline-first
+      </p>
+      <h1 class="mt-6 text-4xl leading-[1.1] font-semibold tracking-tight text-balance sm:text-6xl">
+        La base de datos de tu app móvil, <span class="text-accent">mientras la usas</span>.
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-pretty text-muted">
+        Extrae la SQLite del simulador de iOS o del emulador de Android, consúltala, edítala y
+        devuelve los cambios al dispositivo. Una app de escritorio nativa, escrita en Rust.
+      </p>
+
+      <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          id="primary-download"
+          href={downloadUrl(macos.asset)}
+          class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 font-semibold text-on-accent shadow-lg shadow-accent/20 hover:brightness-110"
+        >
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true"
+            ><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14" stroke-linecap="round" stroke-linejoin="round"
+            ></path></svg
+          >
+          <span id="primary-download-label">Descargar para {macos.name}</span>
+        </a>
+        <a
+          href="#descargar"
+          class="rounded-xl border border-border-strong px-6 py-3 font-medium text-text-soft hover:bg-surface"
+        >
+          Otras plataformas
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-subtle">
+        {release ? `Versión ${release.version} · ` : ""}macOS, Windows y Linux · Gratis
+      </p>
+    </div>
+
+    <div class="mx-auto mt-16 max-w-5xl">
+      <AppPreview />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { PLATFORMS, downloadUrl, type PlatformId } from "../config";
+
+  // El botón principal apunta a macOS sin JavaScript; aquí se ajusta al sistema del visitante.
+  function detect(): PlatformId | null {
+    const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+    const platform = (nav.userAgentData?.platform || navigator.platform || "").toLowerCase();
+    const agent = navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|android/.test(agent)) return null;
+    if (platform.includes("win") || agent.includes("windows")) return "windows";
+    if (platform.includes("linux") || agent.includes("linux")) return "linux";
+    if (platform.includes("mac") || agent.includes("mac os")) return "macos";
+    return null;
+  }
+
+  const id = detect();
+  const platform = PLATFORMS.find((candidate) => candidate.id === id);
+  const button = document.getElementById("primary-download") as HTMLAnchorElement | null;
+  const label = document.getElementById("primary-download-label");
+  if (button && label) {
+    if (platform) {
+      button.href = downloadUrl(platform.asset);
+      label.textContent = `Descargar para ${platform.name}`;
+    } else {
+      // En móvil no hay nada que instalar: se lleva a la sección de descargas.
+      button.href = "#descargar";
+      label.textContent = "Ver descargas";
+    }
+  }
+</script>

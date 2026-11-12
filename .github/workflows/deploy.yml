@@ -1,0 +1,60 @@
+name: Desplegar landing
+
+# La versión y los tamaños de las descargas se leen de la última Release de gt2rz/db-bridge al
+# compilar. Se recompila al hacer push, cuando la app publica una Release (repository_dispatch,
+# si su repo tiene el secreto LANDING_DISPATCH_TOKEN) y una vez al día por si no lo tiene.
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [release]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compilar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Compilar Astro
+        run: npm run build
+        env:
+          # Evita el límite de la API de GitHub sin autenticar al leer la última Release.
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

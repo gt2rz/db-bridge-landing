@@ -1,0 +1,33 @@
+---
+const steps = [
+  {
+    title: "Elige el dispositivo y la app",
+    body: "Pulsa Detectar: aparecen los simuladores y emuladores encendidos, sus apps y las bases de datos de cada una.",
+  },
+  {
+    title: "Extrae y explora",
+    body: "Extraer y conectar copia la base de datos. Navega por las tablas, filtra, ordena o escribe tu propia consulta.",
+  },
+  {
+    title: "Edita y vuelve a abrir la app",
+    body: "Cada cambio se envía al dispositivo. Reabre la app y verás los datos tal y como los dejaste.",
+  },
+];
+---
+
+<section id="como-funciona" class="border-t border-border">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Cómo funciona</h2>
+    <ol class="mt-12 grid gap-8 md:grid-cols-3">
+      {
+        steps.map((step, index) => (
+          <li>
+            <span class="font-mono text-sm text-accent">0{index + 1}</span>
+            <h3 class="mt-2 text-lg font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
