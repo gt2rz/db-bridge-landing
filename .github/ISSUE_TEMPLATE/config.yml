@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Errores y propuestas de DB Bridge
+    url: https://github.com/gt2rz/db-bridge/issues/new/choose
+    about: Los issues de la app y de la landing se gestionan en el repositorio de la app.
+  - name: Reportar una vulnerabilidad
+    url: https://github.com/gt2rz/db-bridge/security/advisories/new
+    about: Las vulnerabilidades se reportan en privado, nunca en un issue público.

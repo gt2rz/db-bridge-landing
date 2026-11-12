@@ -32,3 +32,14 @@ Requisitos en GitHub: **Settings → Pages → Source: GitHub Actions**.
 
 Los nombres de los archivos de `src/config.ts` (`PLATFORMS[].asset`) deben coincidir con los
 que sube `.github/workflows/release.yml` en el repo de la app.
+
+## Seguridad
+
+- El workflow no tiene permisos por defecto, usa actions fijadas por SHA y en las PRs solo
+  compila (sin publicar). Dependabot mantiene al día npm y las actions.
+- `.github/rulesets/main.json`: impórtalo en **Settings → Rules → Rulesets → Import a ruleset**.
+  Nada entra en `main` sin PR, el check `Compilar` y la aprobación del propietario (CODEOWNERS).
+- El resto de ajustes (Actions, Dependabot, secret scanning, CodeQL…) son los mismos que en la
+  app: ver [docs/github.md](https://github.com/gt2rz/db-bridge/blob/main/docs/github.md),
+  salvo la GitHub App de releases, que aquí no hace falta. En *Allowed actions* basta con
+  **Allow actions created by GitHub**.
